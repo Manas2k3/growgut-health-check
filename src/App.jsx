@@ -11,7 +11,7 @@ const GEMINI_API_KEY = typeof __GEMINI_API_KEY__ === "string" ? __GEMINI_API_KEY
 const surveyQuestions = [
   {
     id: "bloatingAfterMeals",
-    title: "Do you feel bloated after meals?",
+    title: "How often does your stomach feel full, tight or swollen?",
     helper: "1 = Rarely, 5 = Almost always",
     minLabel: "Rarely",
     maxLabel: "Almost always",
@@ -27,7 +27,7 @@ const surveyQuestions = [
   },
   {
     id: "bowelRegularity",
-    title: "How regular is your digestion through the week?",
+    title: "Do you have regular bowel movement?",
     helper: "1 = Not regular, 5 = Very regular",
     minLabel: "Irregular",
     maxLabel: "Very regular",
