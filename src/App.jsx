@@ -369,11 +369,7 @@ function App() {
   const validateStepOne = () => {
     const nextErrors = {};
 
-    if (!formData.name.trim()) {
-      nextErrors.name = "Please enter your name.";
-    }
-
-    if (!formData.age || Number(formData.age) < 1) {
+    if (formData.age && Number(formData.age) < 1) {
       nextErrors.age = "Please enter a valid age.";
     }
 
@@ -456,7 +452,7 @@ function App() {
               <div className="space-y-4">
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="name">
-                    Name <span className="text-emerald-600">*</span>
+                    Name <span className="text-slate-400">(optional)</span>
                   </label>
                   <input
                     id="name"
@@ -471,7 +467,7 @@ function App() {
 
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="age">
-                    Age <span className="text-emerald-600">*</span>
+                    Age <span className="text-slate-400">(optional)</span>
                   </label>
                   <input
                     id="age"
