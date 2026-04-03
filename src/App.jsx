@@ -366,7 +366,7 @@ function App() {
     }));
   };
 
-  const validateStepOne = () => {
+  const validateDetails = () => {
     const nextErrors = {};
 
     if (formData.age && Number(formData.age) < 1) {
@@ -381,7 +381,7 @@ function App() {
     return Object.keys(nextErrors).length === 0;
   };
 
-  const validateStepTwo = () => {
+  const validateQuestions = () => {
     const nextErrors = {};
 
     surveyQuestions.forEach((question) => {
@@ -395,11 +395,11 @@ function App() {
   };
 
   const handleNext = () => {
-    if (step === 1 && validateStepOne()) {
+    if (step === 1 && validateQuestions()) {
       setStep(2);
     }
 
-    if (step === 2 && validateStepTwo()) {
+    if (step === 2 && validateDetails()) {
       setStep(3);
     }
   };
@@ -438,7 +438,7 @@ function App() {
                 Discover your gut wellness snapshot in under 1 minute
               </h1>
               <p className="mt-3 text-sm leading-6 text-slate-600">
-                Take this quick event-only survey and unlock your AI Tongue Analysis inside the Gi Bud app.
+              
               </p>
             </div>
 
@@ -449,6 +449,51 @@ function App() {
             ) : null}
 
             {step === 1 ? (
+              <div className="space-y-5">
+                {surveyQuestions.map((question, questionIndex) => (
+                  <div key={question.id} className="rounded-3xl border border-emerald-100 bg-emerald-50/60 p-4">
+                    <div className="mb-3">
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                        Question {questionIndex + 1}
+                      </p>
+                      <h2 className="mt-1 text-base font-semibold leading-6 text-slate-900">
+                        {question.title}
+                      </h2>
+                      <p className="mt-1 text-sm text-slate-500">{question.helper}</p>
+                    </div>
+
+                    <div className="grid grid-cols-5 gap-2">
+                      {[1, 2, 3, 4, 5].map((value) => {
+                        const isActive = formData[question.id] === value;
+
+                        return (
+                          <button
+                            key={value}
+                            type="button"
+                            onClick={() => handleInputChange(question.id, value)}
+                            className={`scale-chip ${isActive ? "scale-chip-active" : ""}`}
+                            aria-pressed={isActive}
+                          >
+                            {value}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-3 flex items-center justify-between text-xs font-medium text-slate-500">
+                      <span>{question.minLabel}</span>
+                      <span>{question.maxLabel}</span>
+                    </div>
+
+                    {errors[question.id] ? (
+                      <p className="mt-3 text-sm text-rose-600">{errors[question.id]}</p>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
+            {step === 2 ? (
               <div className="space-y-4">
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="name">
@@ -494,51 +539,6 @@ function App() {
                   />
                   {errors.phoneNumber ? <p className="mt-2 text-sm text-rose-600">{errors.phoneNumber}</p> : null}
                 </div>
-              </div>
-            ) : null}
-
-            {step === 2 ? (
-              <div className="space-y-5">
-                {surveyQuestions.map((question, questionIndex) => (
-                  <div key={question.id} className="rounded-3xl border border-emerald-100 bg-emerald-50/60 p-4">
-                    <div className="mb-3">
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
-                        Question {questionIndex + 1}
-                      </p>
-                      <h2 className="mt-1 text-base font-semibold leading-6 text-slate-900">
-                        {question.title}
-                      </h2>
-                      <p className="mt-1 text-sm text-slate-500">{question.helper}</p>
-                    </div>
-
-                    <div className="grid grid-cols-5 gap-2">
-                      {[1, 2, 3, 4, 5].map((value) => {
-                        const isActive = formData[question.id] === value;
-
-                        return (
-                          <button
-                            key={value}
-                            type="button"
-                            onClick={() => handleInputChange(question.id, value)}
-                            className={`scale-chip ${isActive ? "scale-chip-active" : ""}`}
-                            aria-pressed={isActive}
-                          >
-                            {value}
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    <div className="mt-3 flex items-center justify-between text-xs font-medium text-slate-500">
-                      <span>{question.minLabel}</span>
-                      <span>{question.maxLabel}</span>
-                    </div>
-
-                    {errors[question.id] ? (
-                      <p className="mt-3 text-sm text-rose-600">{errors[question.id]}</p>
-                    ) : null}
-                  </div>
-                ))}
               </div>
             ) : null}
 
